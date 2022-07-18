@@ -53,7 +53,7 @@ export default function Home() {
         <title>Create Next App</title>
       </Head>
       {loading && <Backdrop on={loading} />}
-      {!loading && <Grid articles={data} isbn={isbn} />}
+      {<Grid  articles={data} isbn={isbn} />}
     </div>
   );
 }
