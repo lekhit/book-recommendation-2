@@ -2,9 +2,9 @@ import { Masonry } from '@mui/lab';
 import { Grid } from '@mui/material';
 import { Item } from './Grid_top';
 import Mycard from './card';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 export default function myGrid(props) {
-  const articles = props.articles;
+  const [articles, _] = useState(props.articles);
   console.log(articles);
   return (
     <>
