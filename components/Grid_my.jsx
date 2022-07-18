@@ -26,7 +26,7 @@ export default function LinearDeterminate(props) {
             props.articles.map((height, index) => (
               <Grid key={index}>
                 <Item>
-                  <Mycard key={index} article={height} />
+                  <Mycard key={index} article={height} open={true} />
                 </Item>
               </Grid>
             ))}
