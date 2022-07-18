@@ -31,7 +31,7 @@ const ExpandMore = styled((props) => {
 }));
 
 export default function RecipeReviewCard(props) {
-  const [expanded, setExpanded] = React.useState(false);
+  const [expanded, setExpanded] = React.useState(true);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -65,7 +65,7 @@ export default function RecipeReviewCard(props) {
       />
       <CardContent>
         <Typography variant="body2" color="text.secondary">
-          {props.article.summary}
+          {props.article.likePercent}
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
@@ -75,12 +75,20 @@ export default function RecipeReviewCard(props) {
           justifyContent="flex-end"
           alignItems="flex-end"
         >
-          <Link href="#">
+          <Link href={`/book?isbn=${props.article.isbn}`}>
             <Button variant="contained">
               {' '}
               More <ArrowForwardIosIcon />
             </Button>
           </Link>
+          <ExpandMore
+            expand={expanded}
+            onClick={handleExpandClick}
+            aria-expanded={expanded}
+            aria-label="show more"
+          >
+            <ExpandMoreIcon />
+          </ExpandMore>
         </Grid>
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>

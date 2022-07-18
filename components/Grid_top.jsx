@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 
+import LinearProgress from '@mui/material/LinearProgress';
+
 import Box from '@mui/material/Box';
 import { styled } from '@mui/material/styles';
-import Paper from '@mui/material/Paper';
+import { Container, Paper } from '@mui/material';
 import Mycard from './card';
-//import Masonry from '@mui/lab/Masonry';
+import Masonry from '@mui/lab/Masonry';
 import { Grid, Button } from '@mui/material';
-import Navbar from './navBar';
-
+import CircularProgress from '@mui/material/CircularProgress';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Mysample from './sample';
 import Loading from './loading';
@@ -36,6 +37,35 @@ export default function FixedColumns() {
 
   const [progress, setProgress] = useState(10);
 
+  function LinearDeterminate() {
+    React.useEffect(() => {
+      const timer = setInterval(() => {
+        setProgress((oldProgress) => {
+          if (oldProgress === 100) {
+            setLoading(false);
+            return 0;
+          }
+          const diff = Math.random() * 10;
+          return Math.min(oldProgress + diff, 100);
+        });
+      }, 50);
+
+      return () => {
+        clearInterval(timer);
+      };
+    }, []);
+
+    return (
+      <Box sx={{ width: '100%' }}>
+        <LinearProgress
+          variant="determinate"
+          color="warning"
+          value={progress}
+        />
+      </Box>
+    );
+  }
+
   const updateBooks = async () => {
     setLoading(true);
     var options = {
@@ -43,11 +73,11 @@ export default function FixedColumns() {
       url: 'https://rem4.lekhitborole.repl.co',
       params: { page: page },
     };
-    setProgress(30);
+    setProgress(55);
     axios
       .request(options)
       .then(function (response) {
-        setProgress(70);
+        setProgress(99);
         setArticles(articles.concat(response.data));
         console.log(response);
         setMore(false);
@@ -55,6 +85,7 @@ export default function FixedColumns() {
       })
       .catch(function (error) {
         console.error(error);
+        setPage(page + 1);
       });
 
     //let parsedData = await data.json();
@@ -76,63 +107,27 @@ export default function FixedColumns() {
   //console.log(articles);
   return (
     <>
-      <Navbar />
-
-      <Box sx={{ minHeight: 253 }}>
+      {/*Put the scroll bar always on the bottom*/}
+      <Container sx={{ minHeight: 253, pt: 18 }} id="scrollableDiv">
         <InfiniteScroll
-          loadMore={fetchMore}
-          hasMore={more}
-          loader={
-            <Loading
-              progress={progress}
-              setProgress={setProgress}
-              setLoading={setLoading}
-            />
-          }
-          useWindow={false}
+          dataLength={articles.length}
+          next={fetchMore}
+          //
+          hasMore={true}
+          loader={<LinearDeterminate />}
         >
-          <Grid
-            container
-            justifyContent="space-around"
-            spacing={0.5}
-            alignItems="stretch"
-          >
+          <Masonry columns={{ sx: 1, md: 2, lg: 3 }} spacing={0.5}>
             {articles.map((height, index) => (
-              <Grid key={index} sx={{ p: 2 }}>
+              <Grid key={index} item sx={{ p: 2 }}>
                 <Item>
-                  {' '}
                   <Mycard key={index} article={height} />
                 </Item>
               </Grid>
             ))}
-          </Grid>
+          </Masonry>
         </InfiniteScroll>
+      </Container>
 
-        
-      </Box>
-
-      <div
-  id="scrollableDiv"
-  style={{
-    height: 300,
-    overflow: 'auto',
-    display: 'flex',
-    flexDirection: 'column-reverse',
-  }}
->
-  {/*Put the scroll bar always on the bottom*/}
-  <InfiniteScroll
-    dataLength={articles.length}
-    next={fetchMore}
-    style={{ display: 'flex', flexDirection: 'column-reverse' }} //To put endMessage and loader to the top.
-    inverse={true} //
-    hasMore={true}
-    loader={<h4>Loading...</h4>}
-    scrollableTarget="scrollableDiv"
-  >
-    {}
-  </InfiniteScroll>
-</div>
       <Button
         onClick={() => {
           setPage(page + 1);

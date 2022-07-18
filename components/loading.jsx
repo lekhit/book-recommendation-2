@@ -3,8 +3,6 @@ import Box from '@mui/material/Box';
 import LinearProgress from '@mui/material/LinearProgress';
 
 export default function LinearDeterminate(props) {
-  const [progress, setProgress] = React.useState(0);
-
   React.useEffect(() => {
     const timer = setInterval(() => {
       props.setProgress((oldProgress) => {
@@ -24,7 +22,11 @@ export default function LinearDeterminate(props) {
 
   return (
     <Box sx={{ width: '100%' }}>
-      <LinearProgress variant="determinate" color="warning" value={props.progress} />
+      <LinearProgress
+        variant="determinate"
+        color="warning"
+        value={props.progress}
+      />
     </Box>
   );
 }
