@@ -13,25 +13,8 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 
-const pages = [
-  'news',
-  'sport',
-  'tech',
-  'world',
-  'finance',
-  'politics',
-  'business',
-  'economics',
-  'entertainment',
-  'beauty',
-  'travel',
-  'music',
-  'food',
-  'science',
-  'gaming',
-  'energy',
-];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const pages = [];
+const settings = [];
 
 const ResponsiveAppBar = (props) => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -72,7 +55,7 @@ const ResponsiveAppBar = (props) => {
               textDecoration: 'none',
             }}
           >
-            news
+            Books
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -149,7 +132,7 @@ const ResponsiveAppBar = (props) => {
             ))}
           </Box>
 
-          <Box sx={{ flexGrow: 0,  }}>
+          <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
